@@ -65,7 +65,7 @@ def index():
             "p_totale": request.form.get("p_totale"),
             "t_utilisation": request.form.get("t_utilisation"),
             "fontionnement": request.form.get("fontionnement"),
-            "w_m2": request.form.get("w_m2"),
+            "W_m2": request.form.get("W_m2"),
             "bâtiments": request.form.get("bâtiments"),
             "secteur_etude": request.form.get("secteur_etude"),
             "seuil_reglementaire": request.form.get("seuil_reglementaire"),
