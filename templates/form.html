@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Génération de Rapport</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        label { display: block; margin-top: 15px; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 20px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h2>Informations du Client</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="client_ste">Société</label>
+        <input type="text" name="client_ste" required>
+
+        <label for="client_address">Adresse</label>
+        <input type="text" name="client_address" required>
+
+        <label for="version">Version</label>
+        <input type="text" name="version" required>
+
+        <label for="client_name">Nom du Contact</label>
+        <input type="text" name="client_name" required>
+
+        <label for="client_mail">Email</label>
+        <input type="email" name="client_mail" required>
+
+        <label for="client_phone">Téléphone</label>
+        <input type="text" name="client_phone" required>
+
+        <h2>Fiche Identité du Site</h2>
+
+        <label for="ste">Nom du Site</label>
+        <input type="text" name="ste" required>
+
+        <label for="address">Adresse du Chantier</label>
+        <input type="text" name="address" required>
+
+        <label for="surface">Surface éclairée (m²)</label>
+        <input type="number" name="surface" required>
+
+        <label for="activité">Secteur d'activité</label>
+        <input type="text" name="activité" required>
+
+        <label for="nbr_batiments">Nombre de bâtiments/zones</label>
+        <input type="number" name="nbr_batiments" required>
+
+        <label for="date_visite">Date de visite</label>
+        <input type="date" name="date_visite" required>
+
+        <label for="date_etude">Date de l'étude</label>
+        <input type="date" name="date_etude" required>
+
+        <label for="audit">Opqbi be</label>
+        <input type="text" name="audit">
+
+        <label for="contact">Contact</label>
+        <input type="text" name="contact">
+
+        <label for="station_meteo">Station Météo</label>
+        <input type="text" name="station_meteo">
+
+        <label for="nom_client">Nom du Client</label>
+        <input type="text" name="nom_client">
+
+        <label for="telephone_client">Téléphone du Client</label>
+        <input type="text" name="telephone_client">
+
+        <h2>Inventaire et Résultats de Simulation</h2>
+
+        <label for="p_unitaire">Puissance unitaire (W)</label>
+        <input type="number" name="p_unitaire" step="0.1">
+
+        <label for="nombre">Nombre de luminaires</label>
+        <input type="number" name="nombre">
+
+        <label for="p_totale">Puissance totale (W)</label>
+        <input type="number" name="p_totale" step="0.1">
+
+        <label for="t_utilisation">Temps d'utilisation (h/an)</label>
+        <input type="number" name="t_utilisation">
+
+        <label for="fontionnement">Fonctionnement</label>
+        <input type="text" name="fontionnement">
+
+        <label for="W_m2">W/m²</label>
+        <input type="text" name="W_m2">
+
+        <label for="bâtiments">Nom des bâtiments</label>
+        <input type="text" name="bâtiments">
+
+        <label for="secteur_etude">Secteur étude (DIALUX)</label>
+        <input type="text" name="secteur_etude">
+
+        <label for="seuil_reglementaire">Seuil réglementaire (Lux)</label>
+        <input type="number" name="seuil_reglementaire">
+
+        <label for="puissance_installée">Puissance installée (W)</label>
+        <input type="number" name="puissance_installée">
+
+        <label for="consommation_energie">Consommation d'énergie (kWh/an)</label>
+        <input type="number" name="consommation_energie">
+
+        <label for="syn_nbr">Nombre total synthèse</label>
+        <input type="number" name="syn_nbr">
+
+        <label for="syn_p_totale">Puissance totale synthèse</label>
+        <input type="number" name="syn_p_totale">
+
+        <label for="niveau_eclairage">Niveau d'éclairement moyen (Lux)</label>
+        <input type="number" name="niveau_eclairage">
+
+        <label for="facteur_uniformité">Facteur d'uniformité</label>
+        <input type="text" name="facteur_uniformité">
+
+        <label for="puissance_init">Puissance initiale (W)</label>
+        <input type="number" name="puissance_init">
+
+        <label for="puissance_projetée">Puissance projetée (W)</label>
+        <input type="number" name="puissance_projetée">
+
+        <label for="puissance_réelle_projetée">Puissance réelle projetée (W)</label>
+        <input type="number" name="puissance_réelle_projetée">
+
+        <label for="conso_initiale">Consommation initiale (kWh/an)</label>
+        <input type="number" name="conso_initiale">
+
+        <label for="conso_projetée">Consommation projetée (kWh/an)</label>
+        <input type="number" name="conso_projetée">
+
+        <label for="economie_energie">Économies d'énergie (kWh/an)</label>
+        <input type="number" name="economie_energie">
+
+        <label for="emissions">Émissions CO₂ évitées (kgeqCO₂)</label>
+        <input type="number" name="emissions">
+
+        <h2>Image de signature</h2>
+        <label for="image_signature">Télécharger une image (signature, logo...)</label>
+        <input type="file" name="image_signature" accept="image/*">
+
+        <button type="submit">Générer le rapport</button>
+    </form>
+</body>
+</html>
