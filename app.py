@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, send_file
 from docxtpl import DocxTemplate, InlineImage
 from docx.shared import Mm
-from docx2pdf import convert
 import os
 import uuid
 
@@ -17,7 +16,6 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        # Gestion de l'image (signature)
         image_path = ""
         if "image_signature" in request.files:
             image_file = request.files["image_signature"]
@@ -29,7 +27,6 @@ def index():
         doc = DocxTemplate(MODEL_PATH)
         image_signature = InlineImage(doc, image_path, width=Mm(50)) if image_path else ""
 
-        # Récupération des données du formulaire
         context = {
             "client_ste": request.form.get("client_ste"),
             "client_address": request.form.get("client_address"),
@@ -74,17 +71,10 @@ def index():
             "image_signature": image_signature
         }
 
-        doc.render(context)
-
         base_filename = f"rapport_{uuid.uuid4().hex}"
         output_docx = os.path.join(OUTPUT_FOLDER, base_filename + ".docx")
-        output_pdf = os.path.join(OUTPUT_FOLDER, base_filename + ".pdf")
+        doc.render(context)
         doc.save(output_docx)
-
-        try:
-            convert(output_docx)
-        except Exception as e:
-            return f"Erreur lors de la conversion PDF : {e}"
 
         return f"""
         <!DOCTYPE html>
@@ -92,7 +82,7 @@ def index():
         <head>
             <meta charset='UTF-8'>
             <title>Rapport généré</title>
-            <meta http-equiv='refresh' content='10; URL=/download/{os.path.basename(output_pdf)}'>
+            <meta http-equiv='refresh' content='10; URL=/download/{os.path.basename(output_docx)}'>
             <style>
                 body {{ font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f2f2f2; }}
                 h2 {{ color: #2ecc71; }}
@@ -103,7 +93,8 @@ def index():
         <body>
             <div class='message'>
                 <h2>✅ Rapport généré avec succès !</h2>
-                <p><a href='/download/{os.path.basename(output_pdf)}'>📄 Télécharger le PDF</a></p>
+                <p><a href='/download/{os.path.basename(output_docx)}'>📄 Télécharger le fichier Word</a></p>
+                <p>Vous pouvez ensuite l'ouvrir avec Word et l'exporter en PDF via <strong>Fichier &gt; Exporter en PDF</strong>.</p>
                 <p>(Vous allez être redirigé automatiquement dans 10 secondes...)</p>
             </div>
         </body>
