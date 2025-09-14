@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Récapitulatif Complet</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+    h2 { color: #4facfe; }
+    h3 { color: #4facfe; margin-top: 20px; }
+    .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #4facfe; color: #fff; }
+    .totals { font-weight: bold; }
+    button { background:#4facfe; color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer; font-size:1rem; margin-top:10px; }
+    .images { display: flex; gap: 10px; margin-top: 10px; }
+    .images div { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+
+<h2>📝 Génération de Rapport</h2>
+
+<div class="section">
+    <h3>Informations du Client</h3>
+    <p><strong>Société :</strong> {{ data.client_ste }}</p>
+    <p><strong>Adresse :</strong> {{ data.client_address }}</p>
+    <p><strong>Version :</strong> {{ data.version }}</p>
+    <p><strong>Nom du Contact :</strong> {{ data.client_name }}</p>
+    <p><strong>Email :</strong> {{ data.client_mail }}</p>
+    <p><strong>Téléphone :</strong> {{ data.client_phone }}</p>
+</div>
+
+<div class="section">
+    <h3>Inventaire des Luminaires</h3>
+    <table>
+        <tr>
+            <th>Marque</th><th>Référence</th><th>Puissance unitaire (W)</th><th>Nombre</th><th>Puissance totale (W)</th>
+        </tr>
+        {% for l in data.luminaires %}
+        <tr>
+            <td>{{ l.marque }}</td>
+            <td>{{ l.reference }}</td>
+            <td>{{ l.puissance }}</td>
+            <td>{{ l.nombre }}</td>
+            <td>{{ l.puissance_totale }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="totals">
+            <td colspan="3">Total</td>
+            <td>{{ data.total_luminaires }}</td>
+            <td>{{ data.total_puissance }}</td>
+        </tr>
+    </table>
+    <!--<p>➕ Ajouter un luminaire</p>-->
+</div>
+
+<div class="section">
+    <h3>Équipements</h3>
+    <table>
+        <tr>
+            <th>Type</th><th>Puissance unitaire (W)</th><th>Nombre</th><th>Puissance totale (W)</th><th>Temps d'utilisation (h/an)</th><th>Fonctionnement</th><th>W/m²</th>
+        </tr>
+        {% for e in data.equipements %}
+        <tr>
+            <td>{{ e.type }}</td>
+            <td>{{ e.puissance_unitaire }}</td>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.puissance_totale }}</td>
+            <td>{{ e.temps_utilisation }}</td>
+            <td>{{ e.fonctionnement }}</td>
+            <td>{{ e.w_m2 }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="totals">
+            <td colspan="3">Totaux</td>
+            <td>{{ data.total_puissance_totale }}</td>
+            <td>{{ data.total_temps_utilisation }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <!--<p>➕ Ajouter un équipement</p>-->
+</div>
+
+<div class="section">
+    <h3>État des lieux - Inventaire initial</h3>
+    <table>
+        <tr>
+            <th>Marque</th><th>Référence</th><th>Puissance (W)</th><th>Nombre</th><th>Temps utilisation (h/an)</th><th>Fonctionnement</th><th>W/m²</th>
+        </tr>
+        {% for inv in data.inventaire %}
+        <tr>
+            <td>{{ inv.marque }}</td>
+            <td>{{ inv.reference }}</td>
+            <td>{{ inv.puissance }}</td>
+            <td>{{ inv.nombre }}</td>
+            <td>{{ inv.temps_utilisation }}</td>
+            <td>{{ inv.fonctionnement }}</td>
+            <td>{{ inv.w_m2 }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="totals">
+            <td colspan="3">Totaux</td>
+            <td>{{ data.total_nombre }}</td>
+            <td>{{ data.total_temps }}</td>
+            <td></td>
+            <td>{{ data.total_puissance }}</td>
+        </tr>
+    </table>
+
+    
+</div>
+
+<div class="section">
+    <h3>Résultats et Indicateurs</h3>
+    <p><strong>Niveau d'éclairement moyen (Lux) :</strong> {{ data.eclairement_moyen }}</p>
+    <p><strong>Facteur d'uniformité :</strong> {{ data.uniformite_modelee }}</p>
+    <p><strong>Puissance initiale (W) :</strong> {{ data.puissance_init }}</p>
+    <p><strong>Puissance projetée (W) :</strong> {{ data.puissance_projetée }}</p>
+    <p><strong>Puissance réelle projetée (W) :</strong> {{ data.puissance_reelle_projete }}</p>
+    <p><strong>Consommation initiale (kWh/an) :</strong> {{ data.conso_initiale }}</p>
+    <p><strong>Consommation projetée (kWh/an) :</strong> {{ data.conso_projete }}</p>
+    <p><strong>Économies d'énergie (kWh/an) :</strong> {{ data.economie_energie }}</p>
+    <p><strong>Émissions CO₂ évitées (kgeqCO₂/an) :</strong> {{ data.emissions_evitees }}</p>
+</div>
+
+<div class="section">
+    <h3>Bâtiments / Zones</h3>
+    <table>
+        <tr>
+            <th>Zone</th><th>Usage</th><th>Surface (m²)</th><th>Lux projeté</th><th>Nombre luminaires</th><th>Coeff gradation</th><th>W/m² théorique</th><th>W/m² réel</th><th>W/m² / 100 Lux réel</th>
+        </tr>
+        {% for z in data.zones %}
+        <tr>
+            <td>{{ z.nom }}</td>
+            <td>{{ z.usage }}</td>
+            <td>{{ z.surface }}</td>
+            <td>{{ z.lux_projete }}</td>
+            <td>{{ z.nbr_luminaires }}</td>
+            <td>{{ z.coeff_gradation }}</td>
+            <td>{{ z.w_m2_theorique }}</td>
+            <td>{{ z.w_m2_reel }}</td>
+            <td>{{ z.w_m2_100lux_reel }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="totals">
+            <td colspan="2">Totaux</td>
+            <td>{{ data.global.surface }}</td>
+            <td>{{ data.global.lux_projete }}</td>
+            <td>{{ data.global.nbr_luminaires }}</td>
+            <td>{{ data.global.coeff_gradation }}</td>
+            <td>{{ data.global.w_m2_theorique }}</td>
+            <td>{{ data.global.w_m2_reel }}</td>
+            <td>{{ data.global.w_m2_100lux_reel }}</td>
+        </tr>
+    </table>
+
+   
+</div>
+    <!--<p>➕ Ajouter une zone</p>-->
+</div>
+
+<form action="/generate" method="POST" enctype="multipart/form-data">
+    {% for key, value in data.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <button type="submit">🚀 Générer le rapport</button>
+</form>
+
+</body>
+</html>
